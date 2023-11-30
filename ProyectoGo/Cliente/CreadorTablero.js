@@ -1,6 +1,10 @@
 class CreadorTablero {
+    static SMALL = 9;
+    static MEDIUM = 13;
+    static BIG = 19;
+
     static createGoBoard(lines) {
-        const boardSize = 400; 
+        const boardSize = this.getSize(lines); 
         const cellSize = boardSize / (lines - 1);
 
         const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -31,14 +35,29 @@ class CreadorTablero {
         document.getElementById("goBoardContainer").appendChild(svg);
     }
 
-    static createCircle(color) {
-        var svg = document.getElementById("goBoard");
-        var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        circle.setAttribute("cx",20);
-        circle.setAttribute("cy",20);
-        circle.setAttribute("r",20);
+    
+
+    static createCircle(color, dataX, dataY, cellSize) {
+        const svg = document.getElementById("goBoard");
+
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("class", "circle");
+        circle.setAttribute("cx", dataX * cellSize);
+        circle.setAttribute("cy", dataY * cellSize);
+        circle.setAttribute("r", 15);
         circle.setAttribute("fill", color);
-        svg.appendChild(circle);
+
+        svg.appendChild(circle); 
+    }
+    
+    static getSize(numLines) {
+        if(numLines == this.SMALL) {
+            return 400;
+        } else if(numLines == this.MEDIUM) {
+            return 450;
+        } else {
+            return 550;
+        }
     }
 
     static addButtons() {
@@ -54,20 +73,14 @@ class CreadorTablero {
                 button.setAttribute("class", "intersection-button");
                 button.setAttribute("data-x", i);
                 button.setAttribute("data-y", j);
+                button.setAttribute("cellSize", cellSize);
                 button.style.position = "absolute";
                 button.style.left = i * cellSize - 10 + "px"; // Adjust button position
                 button.style.top = j * cellSize - 10 + "px";  // Adjust button position
-    
-                button.addEventListener("click", function() {
-                    const x = this.getAttribute("data-x");
-                    const y = this.getAttribute("data-y");
-                    console.log(`Button clicked at intersection (${x}, ${y})`);
-                });
     
                 buttonContainer.appendChild(button);
             }
         }
         document.getElementById("goBoardContainer").appendChild(buttonContainer);
-        console.log("Botones");
     }
 }
