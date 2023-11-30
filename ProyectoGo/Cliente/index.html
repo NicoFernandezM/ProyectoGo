@@ -1,0 +1,67 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tablero de Go</title>
+
+  <style>
+    body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .intersection-button {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0;
+    }
+
+    .container {
+      position: relative;
+    }
+
+    .line {
+    stroke: black; /* Set the line color */
+    stroke-width: 1; /* Set the line width */
+    }
+
+</style>
+</head>
+<body>
+
+  <select id="myComboBox">
+    <option value="9">9x9</option>
+    <option value="13">13x13</option>
+    <option value="19">19x19</option>
+  </select>
+
+  <button onclick="showSelectedOption()">Seleccionar</button>
+
+  <p id="selectedOption"></p>
+
+  <script src="CreadorTablero.js"></script>
+
+  <script>
+    function showSelectedOption() {
+      var comboBox = document.getElementById("myComboBox");
+      var selectedIndex = comboBox.selectedIndex;
+      var selectedValue = comboBox.options[selectedIndex].value;
+      console.log("Selected Option: " + selectedValue);
+
+      // Call the createGoBoard function from CreadorTablero class
+      CreadorTablero.createGoBoard(parseInt(selectedValue));
+      CreadorTablero.addButtons();
+    }
+  </script>
+
+  <!-- Your SVG container -->
+  <div id="goBoardContainer" class="container"></div>
+
+</body>
+</html>
